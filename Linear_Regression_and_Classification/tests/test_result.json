@@ -1,0 +1,8 @@
+{
+    "test_mean_squared_error": true,
+    "test_imports": false,
+    "test_polynomial_regression": true,
+    "test_generate_regression_data": true,
+    "test_a_imports": true,
+    "test_netid": true
+}
