@@ -1,0 +1,10 @@
+{
+    "score": 100,
+    "tests_passed": 4,
+    "notes": {
+        "test_k_nearest_neighbor": "PASS",
+        "test_euclidean_distances": "PASS",
+        "test_manhattan_distances": "PASS",
+        "test_aggregators": "PASS"
+    }
+}
