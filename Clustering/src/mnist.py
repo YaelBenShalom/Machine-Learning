@@ -1,5 +1,6 @@
 
-import os, struct
+import os
+import struct
 from array import array as pyarray
 import numpy
 from numpy import append, array, int8, uint8, zeros
@@ -8,6 +9,7 @@ from gmm import GMM
 import metrics
 from sklearn.mixture import GaussianMixture
 from sklearn.cluster import KMeans
+
 
 def load_mnist(dataset="training", digits=None, path=None, asbytes=False, selection=None, return_labels=True, return_indices=False):
     """
@@ -78,7 +80,8 @@ def load_mnist(dataset="training", digits=None, path=None, asbytes=False, select
         try:
             path = os.environ['MNIST']
         except KeyError:
-            raise ValueError("Unspecified path requires environment variable $MNIST to be set")
+            raise ValueError(
+                "Unspecified path requires environment variable $MNIST to be set")
 
     try:
         images_fname = os.path.join(path, files[dataset][0])
@@ -113,7 +116,8 @@ def load_mnist(dataset="training", digits=None, path=None, asbytes=False, select
     if return_labels:
         labels = zeros((N), dtype=int8)
     for i, index in enumerate(indices):
-        images[i] = array(images_raw[ indices[i]*rows*cols : (indices[i]+1)*rows*cols ]).reshape((rows, cols))
+        images[i] = array(images_raw[indices[i]*rows *
+                          cols: (indices[i]+1)*rows*cols]).reshape((rows, cols))
         if return_labels:
             labels[i] = labels_raw[indices[i]]
 
@@ -126,15 +130,18 @@ def load_mnist(dataset="training", digits=None, path=None, asbytes=False, select
     if return_indices:
         ret += (indices,)
     if len(ret) == 1:
-        return ret[0] # Don't return a tuple of one
+        return ret[0]  # Don't return a tuple of one
     else:
         return ret
+
 
 if __name__ == "__main__":
     for n in [6000]:
         images, labels = load_mnist('training', path=".")
-        images_train, labels_train = load_mnist('testing', path=".", selection=slice(0, n))
-        images_test, labels_test = load_mnist('testing', path=".", selection=slice(n, n*2+2))
+        images_train, labels_train = load_mnist(
+            'testing', path=".", selection=slice(0, n))
+        images_test, labels_test = load_mnist(
+            'testing', path=".", selection=slice(n, n*2+2))
         # Fit & predict GMM
         # Evaluate GMM
         # Fit & Predict KM
@@ -169,11 +176,15 @@ if __name__ == "__main__":
         kmeans_prediction = kmeans.predict(flatten_test_array)
         gmm_prediction = gmm.predict(flatten_test_array)
 
-        test_kmeans_prediction = metrics.adjusted_mutual_info(labels_test, kmeans_prediction)
-        test_gmm_prediction = metrics.adjusted_mutual_info(labels_test, gmm_prediction)
+        test_kmeans_prediction = metrics.adjusted_mutual_info(
+            labels_test, kmeans_prediction)
+        test_gmm_prediction = metrics.adjusted_mutual_info(
+            labels_test, gmm_prediction)
 
-        print("test_kmeans_prediction: ", test_kmeans_prediction, images_train.shape, images_test.shape)
-        print("test_gmm_prediction: ", test_gmm_prediction, images_train.shape, images_test.shape)
+        print("test_kmeans_prediction: ", test_kmeans_prediction,
+              images_train.shape, images_test.shape)
+        print("test_gmm_prediction: ", test_gmm_prediction,
+              images_train.shape, images_test.shape)
         pass
 
         # question 4:
@@ -194,7 +205,8 @@ if __name__ == "__main__":
                 if len(clusters_label_matrix[row]) == 0:
                     continue
                 common_label = mode(clusters_label_matrix[row])
-                equal_to_cluster += clusters_label_matrix[row].count(common_label)
+                equal_to_cluster += clusters_label_matrix[row].count(
+                    common_label)
 
             accuracy = equal_to_cluster/prediction.shape[0]
             print("accuracy: ", accuracy)
@@ -205,11 +217,13 @@ if __name__ == "__main__":
 
         fig = plt.figure()
         for i in range(kmeans.cluster_centers_.shape[0]):
-            reshapes_cluster_centers = (kmeans.cluster_centers_[i]).reshape((28, 28))
+            reshapes_cluster_centers = (
+                kmeans.cluster_centers_[i]).reshape((28, 28))
 
             dist_list = []
             for j in range(flatten_test_array.shape[0]):
-                dist_list.append(numpy.linalg.norm(flatten_test_array[j] - kmeans.cluster_centers_[i]))
+                dist_list.append(numpy.linalg.norm(
+                    flatten_test_array[j] - kmeans.cluster_centers_[i]))
             min_index = dist_list.index(min(dist_list))
             closest_image = images_test[min_index]
 
@@ -224,5 +238,3 @@ if __name__ == "__main__":
                 sub.set_title('The nearest example')
 
         plt.show()
-
-

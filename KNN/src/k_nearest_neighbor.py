@@ -1,8 +1,8 @@
-import numpy as np 
+import numpy as np
 from .distances import euclidean_distances, manhattan_distances
 
 
-class KNearestNeighbor():    
+class KNearestNeighbor():
     def __init__(self, n_neighbors, distance_measure='euclidean', aggregator='mode'):
         """
         K-Nearest Neighbor is a straightforward algorithm that can be highly
@@ -45,13 +45,12 @@ class KNearestNeighbor():
         self.distance_measure = distance_measure
         self.aggregator = aggregator
 
-
     def fit(self, features, targets):
         """Fit features, a numpy array of size (n_samples, n_features). For a KNN, this
         function should store the features and corresponding targets in class 
         variables that can be accessed in the `predict` function. Note that targets can
         be multidimensional! 
-        
+
         Arguments:
             features {np.ndarray} -- Features of each data point, shape of (n_samples,
                 n_features).
@@ -60,7 +59,6 @@ class KNearestNeighbor():
         """
         self.train_features = features
         self.train_targets = targets
-        
 
     def predict(self, features, ignore_first=False):
         """Predict from features, a numpy array of size (n_samples, n_features) Use the
@@ -85,13 +83,14 @@ class KNearestNeighbor():
                 n_dimensions). This n_dimensions should be the same as n_dimensions of targets in fit function.
         """
         # for each row i:
-            # Set indexes_list = the n_neighbors nearest of test_features[i] from train_features
-            # Set test_target[i] to be  the mean/median of the train_target[j] for j in indexes_list
+        # Set indexes_list = the n_neighbors nearest of test_features[i] from train_features
+        # Set test_target[i] to be  the mean/median of the train_target[j] for j in indexes_list
         predictions = np.zeros((len(features), self.train_targets.shape[1]))
         for i in range(features.shape[0]):
-            nearest_neighbors_indexes = self.find_n_nearest_neighbors(self.n_neighbors, features[i], self.train_features, ignore_first)
+            nearest_neighbors_indexes = self.find_n_nearest_neighbors(
+                self.n_neighbors, features[i], self.train_features, ignore_first)
             predicted_value = self.predict_value(nearest_neighbors_indexes)
-            predictions[i] = predicted_value         
+            predictions[i] = predicted_value
         return predictions
 
     def mode_list(self, l):
@@ -116,7 +115,6 @@ class KNearestNeighbor():
                 label.append(self.mode_list(values_list))
         return label
 
-
     def find_n_nearest_neighbors(self, n_neighbors, feature, train_features, ignore_first):
         if self.distance_measure == 'euclidean':
             dist_list = euclidean_distances(feature, train_features)
@@ -124,14 +122,14 @@ class KNearestNeighbor():
             dist_list = manhattan_distances(feature, train_features)
         return self.find_n_nearest_indexes(n_neighbors, dist_list[0], ignore_first)
 
-
     def find_n_nearest_indexes(self, n_neighbors, dist_list, ignore_first):
         if ignore_first:
             dist_list_ignore_first = np.delete(dist_list, dist_list.argmin())
             if len(dist_list_ignore_first) <= n_neighbors:
                 neighbors_indexes = range(len(dist_list_ignore_first))
             else:
-                neighbors_indexes = np.argpartition(dist_list_ignore_first, n_neighbors)
+                neighbors_indexes = np.argpartition(
+                    dist_list_ignore_first, n_neighbors)
         else:
             if len(dist_list) <= n_neighbors:
                 neighbors_indexes = range(len(dist_list))
@@ -139,4 +137,3 @@ class KNearestNeighbor():
                 neighbors_indexes = np.argpartition(dist_list, n_neighbors)
         n_neighbors_indexes = neighbors_indexes[:n_neighbors]
         return n_neighbors_indexes
-

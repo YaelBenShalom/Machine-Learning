@@ -1,5 +1,6 @@
 import numpy
 
+
 def confusion_matrix(actual, predictions):
     """
     Given predictions (an N-length numpy vector) and actual labels (an N-length 
@@ -13,7 +14,7 @@ def confusion_matrix(actual, predictions):
 
     YOU DO NOT NEED TO IMPLEMENT CONFUSION MATRICES THAT ARE FOR MORE THAN TWO 
     CLASSES (binary).
-    
+
     Compute and return the confusion matrix.
 
     Args:
@@ -28,7 +29,7 @@ def confusion_matrix(actual, predictions):
     if predictions.shape[0] != actual.shape[0]:
         raise ValueError("predictions and actual must be the same length!")
 
-    confusion_matrix = numpy.zeros((2,2))
+    confusion_matrix = numpy.zeros((2, 2))
     true_negatives = 0
     false_negatives = 0
     true_positives = 0
@@ -52,6 +53,7 @@ def confusion_matrix(actual, predictions):
     confusion_matrix[1, 0] = false_negatives
     confusion_matrix[1, 1] = true_positives
     return confusion_matrix
+
 
 def accuracy(actual, predictions):
     """

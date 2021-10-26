@@ -3,6 +3,7 @@ import os
 import csv
 import random
 
+
 def load_data(data_path):
     """
     Associated test case: tests/test_data.py
@@ -12,7 +13,7 @@ def load_data(data_path):
     This function loads the data in data_path csv into two numpy arrays:
     features (of size NxK) and targets (of size Nx1) where N is the number of rows
     and K is the number of features. 
-    
+
     data_path leads to a csv comma-delimited file with each row corresponding to a 
     different example. Each row contains binary features for each example 
     (e.g. chocolate, fruity, caramel, etc.) The last column indicates the label for the
@@ -57,7 +58,7 @@ def load_data(data_path):
 
     attribute_names = my_list[0][0:len(my_list[0])-1]
     col = len(my_list[0])
-    targets_list = [float(my_list[i][col-1]) for i in range(1, len(my_list))] 
+    targets_list = [float(my_list[i][col-1]) for i in range(1, len(my_list))]
     targets = numpy.array(targets_list)
     features = numpy.zeros((len(my_list)-1, len(my_list[0])-1))
     for j in range(1, len(my_list)):
@@ -74,10 +75,10 @@ def train_test_split(features, targets, fraction):
     sampled for training and (features.shape[0] - N) points for testing. Where N:
 
         N = int(features.shape[0] * fraction)
-    
+
     Returns train_features (size NxK), train_targets (Nx1), test_features (size MxK 
     where M is the remaining points in data), and test_targets (Mx1).
-    
+
     Special case: When fraction is 1.0. Training and test splits should be exactly the same. 
     (i.e. Return the entire feature and target arrays for both train and test splits)
 
@@ -106,10 +107,13 @@ def train_test_split(features, targets, fraction):
 
     # N - number of training
     N = int(features.shape[0] * fraction)
-    train_features = numpy.zeros(((int(features.shape[0] * fraction), len(features[0]))))
-    test_features = numpy.zeros(((features.shape[0] - int(features.shape[0] * fraction), len(features[0]))))
+    train_features = numpy.zeros(
+        ((int(features.shape[0] * fraction), len(features[0]))))
+    test_features = numpy.zeros(
+        ((features.shape[0] - int(features.shape[0] * fraction), len(features[0]))))
     train_targets = numpy.zeros(((int(features.shape[0] * fraction), 1)))
-    test_targets = numpy.zeros(((features.shape[0] - int(features.shape[0] * fraction), 1)))
+    test_targets = numpy.zeros(
+        ((features.shape[0] - int(features.shape[0] * fraction), 1)))
 
     random_train_list = []
     for i in range(N):
@@ -132,5 +136,3 @@ def train_test_split(features, targets, fraction):
             test_targets[count_test] = targets[j]
             count_test += 1
     return train_features, test_features, train_targets, test_targets
-
-

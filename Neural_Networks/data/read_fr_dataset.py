@@ -16,7 +16,6 @@ class FR_Dataset(Dataset):
         return self.x.shape[0]
 
 
-#
 # class M1(datasets.MNIST):
 #
 #     def __init__(self, max_items=None):

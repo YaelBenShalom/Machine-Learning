@@ -1,5 +1,6 @@
 import numpy
 
+
 class PriorProbability():
     def __init__(self):
         """
@@ -7,9 +8,8 @@ class PriorProbability():
         points. It just looks at the classes for each data point and always predicts
         the most common class.
         """
-        
-        self.most_common_class = None
 
+        self.most_common_class = None
 
     def fit(self, features, targets):
         """
@@ -34,7 +34,6 @@ class PriorProbability():
             # 0 is most frequent
             self.most_common_class = 0
 
-
     def predict(self, data):
         """
         Takes in features as a numpy array and predicts classes for each point using
@@ -50,6 +49,6 @@ class PriorProbability():
 
         N = data.shape[0]
         # All our predictions are the most common class without any data usage
-        predictions = numpy.ones((N,1))*self.most_common_class
+        predictions = numpy.ones((N, 1))*self.most_common_class
 
         return predictions

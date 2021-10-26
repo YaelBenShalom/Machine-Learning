@@ -27,6 +27,7 @@ class GradientDescent:
         reg_param - (float) The hyperparameter that controls the amount of
             regularization to perform. Must be non-negative.
     """
+
     def __init__(self, loss, regularization=None,
                  learning_rate=0.01, reg_param=0.05):
         self.learning_rate = learning_rate
@@ -98,14 +99,14 @@ class GradientDescent:
 
             # self.model = self.model - self.learning_rate * self.loss.backward(features[:batch_size], self.model, targets[:batch_size])
             # new_loss = self.loss.forward(features[:batch_size], self.model, targets[:batch_size])
-            self.model = self.model - self.learning_rate * self.loss.backward(sample_features, self.model, sample_targets)
-            new_loss = self.loss.forward(sample_features, self.model, sample_targets)
+            self.model = self.model - self.learning_rate * \
+                self.loss.backward(sample_features, self.model, sample_targets)
+            new_loss = self.loss.forward(
+                sample_features, self.model, sample_targets)
             if loss is not None and abs(new_loss - loss) < 1e-5:
                 break
             loss = new_loss
             iteration += 1
-
-
 
     def predict(self, features):
         """

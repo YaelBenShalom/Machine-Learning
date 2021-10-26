@@ -4,6 +4,7 @@ import json
 import os
 import numpy as np
 
+
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     """
@@ -18,6 +19,7 @@ def pytest_runtest_makereport(item, call):
     # be "setup", "call", "teardown"
     setattr(item, "rep_" + rep.when, rep)
 
+
 def load_json(json_path):
     if not os.path.isfile(json_path):
         return {}
@@ -25,9 +27,11 @@ def load_json(json_path):
         data = json.load(f)
     return data
 
+
 def save_json(data, json_path):
     with open(json_path, 'w') as f:
         json.dump(data, f, indent=4)
+
 
 @pytest.fixture(scope='function', autouse=True)
 def log_test_result(request):
@@ -42,6 +46,7 @@ def log_test_result(request):
     test_passed = not request.node.rep_call.failed
     test_result[request.node.name] = test_passed
     save_json(test_result, 'tests/test_result.json')
+
 
 @pytest.fixture(scope="function", autouse=True)
 def grade_assignment(request):
@@ -112,7 +117,7 @@ def grade_assignment(request):
 
     Run this autograder by running the following in the project's root directory.
         python -m pytest
-    
+
     To run a specific test, run:
         python -m pytest -k test_load_data
 
@@ -147,7 +152,7 @@ def grade_assignment(request):
                 for dependency in rubric[name]['depends']:
                     if not test_result[dependency]:
                         dependencies_satisifed = False
-                
+
                 if result and dependencies_satisifed:
                     report['score'] += rubric[name]['weight']
                     report['tests_passed'] += 1

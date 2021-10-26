@@ -1,6 +1,7 @@
 import numpy as np
 import gym
 
+
 class QLearning:
     """
     QLearning reinforcement learning agent.
@@ -70,7 +71,8 @@ class QLearning:
         """
         N = np.zeros((env.observation_space.n, env.action_space.n))
         s = np.floor(steps / 100)
-        state_action_values = np.zeros((env.observation_space.n, env.action_space.n))
+        state_action_values = np.zeros(
+            (env.observation_space.n, env.action_space.n))
         rewards = np.zeros((100))
         state = env.reset()
         for step in range(steps):
@@ -88,7 +90,8 @@ class QLearning:
             old_value = state_action_values[state][action_index]
             next_max = np.max(state_action_values[next_state, :])
 
-            new_value = (1 - alpha) * old_value + alpha * (reward + self.discount * next_max)
+            new_value = (1 - alpha) * old_value + alpha * \
+                (reward + self.discount * next_max)
             state_action_values[state][action_index] = new_value
 
             state = next_state
@@ -99,7 +102,6 @@ class QLearning:
 
         env.close()
         return state_action_values, rewards
-
 
     def predict(self, env, state_action_values):
         """

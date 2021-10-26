@@ -1,10 +1,11 @@
 # HW6: Reinforcement Learning for EECS 349 @ NU
+
 **IMPORTANT: PUT YOUR NETID IN THE FILE** `netid` in the root directory of the assignment.
 This is used to put the autograder output into Canvas. Please don't put someone else's netid
 here, we will check.
 
-
 In this assignment, you will:
+
 - Implement two reinforcement learning algorithms
 - Learn how to interface with OpenAI Gym environments
 - Investigate the performance of your algorithms and the effects of various hyperparameters
@@ -13,9 +14,9 @@ In this assignment, you will:
 
 To clone this repository install GIT on your computer and copy the link of the repository (find above at "Clone or Download") and enter in the command line:
 
-``git clone YOUR-LINK``
+`git clone YOUR-LINK`
 
-Alternatively, just look at the link in your address bar if you're viewing this README in your submission repository in a browser. Once cloned, `cd` into the cloned repository. Every assignment has some files that you edit to complete it. 
+Alternatively, just look at the link in your address bar if you're viewing this README in your submission repository in a browser. Once cloned, `cd` into the cloned repository. Every assignment has some files that you edit to complete it.
 
 ## Files you edit
 
@@ -27,13 +28,13 @@ Do not edit anything in the `tests` directory. Files can be added to `tests` but
 
 Make a conda environment for this assignment, and then run:
 
-``pip install -r requirements.txt``
+`pip install -r requirements.txt`
 
 ## Running the test cases
 
 The test cases can be run with:
 
-``python -m pytest -s``
+`python -m pytest -s`
 
 at the root directory of the assignment repository.
 

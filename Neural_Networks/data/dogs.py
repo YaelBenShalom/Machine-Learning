@@ -120,7 +120,8 @@ class DogsDataset:
         X, y = [], []
         for i, row in df.iterrows():
             label = row['numeric_label']
-            if label >= self.num_classes: continue
+            if label >= self.num_classes:
+                continue
             image = imread(os.path.join(self.images_dir, row['filename']))
             X.append(image)
             y.append(row['numeric_label'])
@@ -150,7 +151,6 @@ class DogsDataset:
             the normalized data as a numpy array.
         """
         if is_train:
-            self.image_mean = np.mean(X, axis=(0,1,2))
-            self.image_std = np.std(X, axis=(0,1,2))
+            self.image_mean = np.mean(X, axis=(0, 1, 2))
+            self.image_std = np.std(X, axis=(0, 1, 2))
         return (X - self.image_mean) / self.image_std
-

@@ -1,6 +1,7 @@
 import json
-import numpy as np 
+import numpy as np
 import os
+
 
 def load_json_data(json_path):
     """
@@ -21,6 +22,7 @@ def load_json_data(json_path):
 
     return features, targets
 
+
 if __name__ == "__main__":
     """
     Running this from the command line in this directory will tell you the shapes of 
@@ -31,7 +33,7 @@ if __name__ == "__main__":
         (127, 2) (127,) ../data/blobs.json
         (68, 2) (68,) ../data/crossing.json
         (131, 2) (131,) ../data/circles.json
-    
+
     """
     try:
         import matplotlib.pyplot as plt
@@ -39,15 +41,15 @@ if __name__ == "__main__":
         import matplotlib
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
-    
+
     data_files = [
-        os.path.join('../data', x) 
-        for x in os.listdir('../data/') 
+        os.path.join('../data', x)
+        for x in os.listdir('../data/')
         if x[-4:] == 'json']
 
     for data_file in data_files:
         features, targets = load_json_data(data_file)
-        plt.figure(figsize=(6,4))
+        plt.figure(figsize=(6, 4))
         plt.scatter(features[:, 0], features[:, 1], c=targets)
         plt.title(data_file)
         plt.savefig(f'../data/{data_file}.png')

@@ -57,7 +57,6 @@ for i in training_dataset_size:
     classes = ['0 - zero', '1 - one', '2 - two', '3 - three',
                '4 - four', '5 - five', '6 - six', '7 - seven', '8 - eight', '9 - nine']
 
-
     # def imshow(img):
     #     img = img / 2 + 0.5  # have to unnormalize the images
     #     npimg = img.numpy()
@@ -73,6 +72,7 @@ for i in training_dataset_size:
     # imshow(torchvision.utils.make_grid(images))
     # # print labels
     # print(' '.join('%5s' % classes[labels[j]] for j in range(4)))
+
     class Net(nn.Module):
         def __init__(self):
             super(Net, self).__init__()
@@ -88,7 +88,6 @@ for i in training_dataset_size:
             x = self.out(x)
             x = F.log_softmax(x, dim=1)
             return x
-
 
     # def train_model(model, criterion, optimizer, trainloader, epochs=100, devloader=None, print_info=True):
     #     epochs_loss = []
@@ -136,6 +135,7 @@ for i in training_dataset_size:
     #         if print_info:
     #             print(f'Epoch: {epoch} Loss: {epoch_loss / minibatches}')
     #     return model, epoch_loss
+
     def test_model(model, testloader):
         # variables to keep count of correct labels and the total labels in a mini batch
         correct = 0
@@ -152,8 +152,7 @@ for i in training_dataset_size:
                 correct += (predicted == labels).sum().item()
 
         print('Accuracy of the network on the 10000 test images: %d %%' % (
-                100 * correct / total))
-
+            100 * correct / total))
 
     model = Net()
     learning_rate = 0.01
@@ -189,8 +188,10 @@ plt.legend(loc="best")
 plt.savefig("Q1a.png")
 plt.show()
 
-print("To train MNIST training set of 2000 samples will take:", running_time_list[-1])
-print("To train the full MNIST training set will take:", running_time_list[-1] * 60000 / training_dataset_size[-1])
+print("To train MNIST training set of 2000 samples will take:",
+      running_time_list[-1])
+print("To train the full MNIST training set will take:",
+      running_time_list[-1] * 60000 / training_dataset_size[-1])
 
 plt.figure()
 plt.plot(training_dataset_size, accuracy_list, label='Accuracy')

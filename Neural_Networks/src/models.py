@@ -72,4 +72,3 @@ class Dog_Classifier_FC(nn.Module):
         output = self.out(hidden2_out)
 
         return output
-

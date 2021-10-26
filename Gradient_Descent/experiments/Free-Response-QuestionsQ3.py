@@ -6,6 +6,7 @@ from your_code import metrics
 from your_code import GradientDescent, load_data
 from your_code import L1Regularization, L2Regularization
 
+
 class MultiClassGradientDescentQ3:
     """
     Implements linear gradient descent for multiclass classification. Uses
@@ -63,7 +64,6 @@ class MultiClassGradientDescentQ3:
                 classes_list.append(x)
         self.classes = np.array(classes_list)
 
-
         for c in self.classes:
             targets_c = -1 * (np.ones(targets.shape))
             for i in range(len(targets)):
@@ -71,11 +71,10 @@ class MultiClassGradientDescentQ3:
                     targets_c[i] = 1
 
             gradient_descent = GradientDescent(self.loss, self.regularization,
-                                                self.learning_rate, self.reg_param)
+                                               self.learning_rate, self.reg_param)
             gradient_descent.fit(features, targets_c, batch_size, max_iter)
             self.model.append(gradient_descent)
         print("self.classes = ", self.classes)
-
 
     def predict(self, features):
         """
@@ -93,7 +92,8 @@ class MultiClassGradientDescentQ3:
                 where index d corresponds to the prediction of row N of
                 features.
         """
-        confidence_matrix = np.zeros((features.shape[0], self.classes.shape[0]))
+        confidence_matrix = np.zeros(
+            (features.shape[0], self.classes.shape[0]))
         for i in range(len(self.classes)):
             gradient_descent = self.model[i]
             confidence = gradient_descent.confidence(features)

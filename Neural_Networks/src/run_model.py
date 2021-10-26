@@ -76,18 +76,22 @@ def run_model(model, running_mode='train', train_set=None, valid_set=None, test_
     if running_mode == 'train':
         valid_loss = None
         train_loss_list, valid_loss_list, train_accuracy_list, valid_accuracy_list = [], [], [], []
-        train_loader = DataLoader(train_set, batch_size=batch_size, shuffle=shuffle)
+        train_loader = DataLoader(
+            train_set, batch_size=batch_size, shuffle=shuffle)
 
         if valid_set is not None:
-            valid_loader = DataLoader(valid_set, batch_size=batch_size, shuffle=shuffle)
+            valid_loader = DataLoader(
+                valid_set, batch_size=batch_size, shuffle=shuffle)
 
         for epoch_num in range(n_epochs):
-            model, train_loss, train_accuracy = _train(model, train_loader, optimizer, device=device)
+            model, train_loss, train_accuracy = _train(
+                model, train_loader, optimizer, device=device)
             train_loss_list.append(train_loss)
             train_accuracy_list.append(train_accuracy)
 
             if valid_set is not None:
-                new_valid_loss, valid_accuracy = _test(model, valid_loader, device=torch.device('cpu'))
+                new_valid_loss, valid_accuracy = _test(
+                    model, valid_loader, device=torch.device('cpu'))
                 valid_loss_list.append(new_valid_loss)
                 valid_accuracy_list.append(valid_accuracy)
                 if (valid_loss is not None) and (valid_loss - new_valid_loss < stop_thr):
@@ -108,7 +112,8 @@ def run_model(model, running_mode='train', train_set=None, valid_set=None, test_
         return model, loss, accuracy
 
     else:
-        test_loader = DataLoader(test_set, batch_size=batch_size, shuffle=shuffle)
+        test_loader = DataLoader(
+            test_set, batch_size=batch_size, shuffle=shuffle)
         test_loss, test_accuracy = _test(model, test_loader, device=device)
 
         return test_loss, test_accuracy
@@ -155,11 +160,12 @@ def _train(model, data_loader, optimizer, device=torch.device('cpu')):
         # convert to class labels
         yhat_labels = np.argmax(yhat1, axis=1)
         # Add to the correct number of predictions
-        correct += len(yhat_labels) - np.count_nonzero(yhat_labels - targets.numpy())
+        correct += len(yhat_labels) - \
+            np.count_nonzero(yhat_labels - targets.numpy())
         total += len(targets)
 
     train_loss = running_loss / len(data_loader)
-    train_accuracy =  correct / total * 100
+    train_accuracy = correct / total * 100
 
     return model, train_loss, train_accuracy
 
@@ -201,7 +207,8 @@ def _test(model, data_loader, device=torch.device('cpu')):
         # convert to class labels
         yhat_labels = np.argmax(yhat1, axis=1)
         # Add to the correct number of predictions
-        correct += len(yhat_labels) - np.count_nonzero(yhat_labels - targets.numpy())
+        correct += len(yhat_labels) - \
+            np.count_nonzero(yhat_labels - targets.numpy())
         total += len(targets)
 
     test_loss = running_loss / len(data_loader)

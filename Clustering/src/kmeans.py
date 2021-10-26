@@ -3,7 +3,8 @@ import copy
 
 
 def choose_random_means(n_clusters, features):
-    mean_list = features[np.random.choice(features.shape[0], n_clusters, replace=False)]
+    mean_list = features[np.random.choice(
+        features.shape[0], n_clusters, replace=False)]
     return mean_list
 
 

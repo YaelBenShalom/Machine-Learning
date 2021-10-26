@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn.datasets import make_blobs
 
+
 def generate_cluster_data(
     n_samples=100,
     n_features=2,

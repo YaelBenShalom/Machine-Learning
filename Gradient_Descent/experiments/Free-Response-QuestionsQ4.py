@@ -6,6 +6,7 @@ from your_code import metrics
 from your_code import GradientDescent, load_data
 from your_code import L1Regularization, L2Regularization
 
+
 class GradientDescentQ4:
     """
     This is a linear classifier similar to the one you implemented in the
@@ -29,6 +30,7 @@ class GradientDescentQ4:
         reg_param - (float) The hyperparameter that controls the amount of
             regularization to perform. Must be non-negative.
     """
+
     def __init__(self, loss, regularization=None,
                  learning_rate=0.01, reg_param=0.05, question='1a'):
         self.learning_rate = learning_rate
@@ -102,8 +104,10 @@ class GradientDescentQ4:
                 sample_features = random.sample(features, batch_size)
                 sample_targets = random.sample(targets, batch_size)
 
-            self.model = self.model - self.learning_rate * self.loss.backward(sample_features, self.model, sample_targets)
-            new_loss = self.loss.forward(sample_features, self.model, sample_targets)
+            self.model = self.model - self.learning_rate * \
+                self.loss.backward(sample_features, self.model, sample_targets)
+            new_loss = self.loss.forward(
+                sample_features, self.model, sample_targets)
             if loss is not None and abs(new_loss - loss) < 1e-4:
                 break
             loss = new_loss
@@ -112,7 +116,6 @@ class GradientDescentQ4:
             accuracy_list.append(accuracy)
             iteration_list.append(iteration)
             iteration += 1
-
 
     def predict(self, features):
         """
@@ -171,9 +174,9 @@ non_zero1 = []
 non_zero2 = []
 for param in reg_param:
     learner1 = GradientDescentQ4(loss=loss, regularization='l1',
-                                learning_rate=learning_rate, reg_param=param)
+                                 learning_rate=learning_rate, reg_param=param)
     learner2 = GradientDescentQ4(loss=loss, regularization='l2',
-                                learning_rate=learning_rate, reg_param=param)
+                                 learning_rate=learning_rate, reg_param=param)
     learner1.fit(train_features, train_targets)
     learner2.fit(train_features, train_targets)
     # predictions1 = learner1.predict(test_features)
@@ -202,8 +205,9 @@ plt.legend(loc="best")
 plt.savefig("Q4a.png")
 
 print('Question 4c')
-learner1 = GradientDescent(loss='squared',learning_rate=1e-3,regularization='l1',reg_param=1)
-learner1.fit(train_features, train_targets,max_iter=4000)
+learner1 = GradientDescent(
+    loss='squared', learning_rate=1e-3, regularization='l1', reg_param=1)
+learner1.fit(train_features, train_targets, max_iter=4000)
 
 epsilon = 0.001
 count = 0
@@ -213,6 +217,6 @@ for i in range(len(learner1.model)):
         heat_model[i] = 1
     else:
         heat_model[i] = 0
-sample = np.reshape(heat_model,(28,28))
+sample = np.reshape(heat_model, (28, 28))
 plt.imshow(sample, cmap='hot', interpolation='nearest')
 plt.savefig("Q4c.png")

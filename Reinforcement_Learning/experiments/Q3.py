@@ -28,8 +28,10 @@ average_rewards_q1 = np.mean(reward_matrix_q1, axis=0)
 average_rewards_q2 = np.mean(reward_matrix_q2, axis=0)
 
 plt.figure()
-plt.plot(range(len(average_rewards_q1)), average_rewards_q1, color='blue', label='Average rewards of QLearning for epsilon = 0.01')
-plt.plot(range(len(average_rewards_q2)), average_rewards_q2, color='green', label='Average rewards of QLearning for epsilon = 0.5')
+plt.plot(range(len(average_rewards_q1)), average_rewards_q1,
+         color='blue', label='Average rewards of QLearning for epsilon = 0.01')
+plt.plot(range(len(average_rewards_q2)), average_rewards_q2,
+         color='green', label='Average rewards of QLearning for epsilon = 0.5')
 plt.title('Average Rewards of QLearning for different epsilons')
 plt.xlabel('Step')
 plt.ylabel('Rewards')

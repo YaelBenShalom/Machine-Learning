@@ -87,8 +87,10 @@ for i in training_dataset_size:
                                          shuffle=True)
 
 plt.figure()
-plt.plot(range(len(train_loss['train'])), train_loss['train'], label='Training Loss')
-plt.plot(range(len(train_loss['valid'])), train_loss['valid'], label='Validation Loss')
+plt.plot(range(len(train_loss['train'])),
+         train_loss['train'], label='Training Loss')
+plt.plot(range(len(train_loss['valid'])),
+         train_loss['valid'], label='Validation Loss')
 plt.title('Training and Validation Loss Vs. Epoch Number')
 plt.xlabel('Epoch Number')
 plt.ylabel('Loss')
@@ -97,8 +99,10 @@ plt.savefig("Q3-loss.png")
 plt.show()
 
 plt.figure()
-plt.plot(range(len(train_accuracy['train'])), train_accuracy['train'], label='Training Accuracy')
-plt.plot(range(len(train_accuracy['valid'])), train_accuracy['valid'], label='Validation Accuracy')
+plt.plot(range(len(train_accuracy['train'])),
+         train_accuracy['train'], label='Training Accuracy')
+plt.plot(range(len(train_accuracy['valid'])),
+         train_accuracy['valid'], label='Validation Accuracy')
 plt.title('Training and Validation Accuracy Vs. Epoch Number')
 plt.xlabel('Epoch Number')
 plt.ylabel('Accuracy')

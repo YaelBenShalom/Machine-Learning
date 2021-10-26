@@ -6,6 +6,7 @@ from your_code import metrics
 from your_code import GradientDescent, load_data
 from your_code import L1Regularization, L2Regularization
 
+
 class GradientDescentQ1:
     """
     This is a linear classifier similar to the one you implemented in the
@@ -29,6 +30,7 @@ class GradientDescentQ1:
         reg_param - (float) The hyperparameter that controls the amount of
             regularization to perform. Must be non-negative.
     """
+
     def __init__(self, loss, regularization=None,
                  learning_rate=0.01, reg_param=0.05, question='1a'):
         self.learning_rate = learning_rate
@@ -102,8 +104,10 @@ class GradientDescentQ1:
                 sample_features = random.sample(features, batch_size)
                 sample_targets = random.sample(targets, batch_size)
 
-            self.model = self.model - self.learning_rate * self.loss.backward(sample_features, self.model, sample_targets)
-            new_loss = self.loss.forward(sample_features, self.model, sample_targets)
+            self.model = self.model - self.learning_rate * \
+                self.loss.backward(sample_features, self.model, sample_targets)
+            new_loss = self.loss.forward(
+                sample_features, self.model, sample_targets)
             if loss is not None and abs(new_loss - loss) < 1e-4:
                 break
             loss = new_loss
@@ -164,6 +168,7 @@ class GradientDescentQ1:
         """
         confidence = features.dot(self.model)
         return confidence
+
 
 print('Question 1a')
 max_iter = 1000

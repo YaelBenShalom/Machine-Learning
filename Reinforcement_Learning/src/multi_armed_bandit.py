@@ -1,6 +1,7 @@
 import numpy as np
 import gym
 
+
 class MultiArmedBandit:
     """
     MultiArmedBandit reinforcement learning agent.
@@ -62,7 +63,8 @@ class MultiArmedBandit:
         N = np.zeros((env.action_space.n, 1))
         Q = np.zeros((env.action_space.n, 1))
         s = np.floor(steps / 100)
-        state_action_values = np.zeros((env.observation_space.n, env.action_space.n))
+        state_action_values = np.zeros(
+            (env.observation_space.n, env.action_space.n))
         rewards = np.zeros((100))
         env.reset()
         for step in range(steps):
@@ -85,7 +87,6 @@ class MultiArmedBandit:
         env.close()
 
         return state_action_values, rewards
-
 
     def predict(self, env, state_action_values):
         """

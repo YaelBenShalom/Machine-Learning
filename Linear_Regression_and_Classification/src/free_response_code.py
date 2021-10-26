@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import SGDClassifier
 from sklearn.datasets import make_blobs
 
+
 def polynomial_regression():
     mse_train = []
     mse_test = []
@@ -17,8 +18,10 @@ def polynomial_regression():
     random_list_size = 10
     d = 4
     x, y = generate_regression_data(d, N, amount_of_noise=0.1)
-    x_train, y_train = np.zeros((random_list_size, 1)), np.zeros((random_list_size, 1))
-    x_test, y_test = np.zeros((N - random_list_size, 1)), np.zeros((N - random_list_size, 1))
+    x_train, y_train = np.zeros(
+        (random_list_size, 1)), np.zeros((random_list_size, 1))
+    x_test, y_test = np.zeros(
+        (N - random_list_size, 1)), np.zeros((N - random_list_size, 1))
     random_list = []
     for i in range(0, random_list_size):
         n = random.randint(0, N - 1)
@@ -54,7 +57,8 @@ def polynomial_regression():
 
     # Q1A
     plt.figure()
-    plt.plot(range(max_degree), mse_train, color='orange', label='The train error')
+    plt.plot(range(max_degree), mse_train,
+             color='orange', label='The train error')
     plt.plot(range(max_degree), mse_test, color='blue', label='The test error')
     plt.title('error vs degree')
     plt.xlabel('degree')
@@ -80,18 +84,20 @@ def polynomial_regression():
 
     plt.figure()
     plt.scatter(x_train, y_train, color='blue')
-    plt.plot(features_sorted, targets_sorted, color='orange', label='The lowest training error')
-    plt.plot(features2_sorted, targets2_sorted, color='green', label='The lowest testing error')
+    plt.plot(features_sorted, targets_sorted, color='orange',
+             label='The lowest training error')
+    plt.plot(features2_sorted, targets2_sorted,
+             color='green', label='The lowest testing error')
     plt.title('X vs Y')
     plt.xlabel('X')
     plt.ylabel('Y')
     plt.legend(loc="best")
     plt.savefig("Q1B.png")
 
-
     # Q5
     # we create 50 separable points
-    X, Y = make_blobs(n_samples=50, centers=2, random_state=0, cluster_std=0.60)
+    X, Y = make_blobs(n_samples=50, centers=2,
+                      random_state=0, cluster_std=0.60)
 
     # fit the model
     clf = SGDClassifier(loss="hinge", alpha=0.01, max_iter=200)

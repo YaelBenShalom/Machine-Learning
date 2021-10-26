@@ -93,11 +93,11 @@ class SquaredLoss(Loss):
             loss - (float) The calculated loss normalized by the number of
                 examples, N.
         """
-        loss = sum([0.5*(y[i] - X[i].dot(w))**2 for i in range(len(y))])/(y.shape[0])
+        loss = sum([0.5*(y[i] - X[i].dot(w)) **
+                   2 for i in range(len(y))])/(y.shape[0])
         if self.regularization is not None:
             loss = loss + self.regularization.forward(w)
         return loss
-
 
     def backward(self, X, w, y):
         """
@@ -155,7 +155,8 @@ class HingeLoss(Loss):
             loss - (float) The calculated loss normalized by the number of
                 examples, N.
         """
-        loss = sum([max(0, 1 - y[i]*X[i].dot(w)) for i in range(len(y))])/(y.shape[0])
+        loss = sum([max(0, 1 - y[i]*X[i].dot(w))
+                   for i in range(len(y))])/(y.shape[0])
         if self.regularization is not None:
             loss = loss + self.regularization.forward(w)
         return loss
@@ -187,7 +188,6 @@ class HingeLoss(Loss):
         if self.regularization is not None:
             gradient = gradient + self.regularization.backward(w)
         return gradient
-
 
 
 class ZeroOneLoss(Loss):

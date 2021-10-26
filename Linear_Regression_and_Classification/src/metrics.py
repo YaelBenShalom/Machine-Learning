@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def mean_squared_error(estimates, targets):
     """
     Mean squared error measures the average of the square of the errors (the

@@ -2,6 +2,7 @@ import numpy as np
 from src import KMeans
 from scipy.stats import multivariate_normal
 
+
 class GMM():
     def __init__(self, n_clusters, covariance_type):
         """
@@ -41,7 +42,8 @@ class GMM():
         self.n_clusters = n_clusters
         allowed_covariance_types = ['spherical', 'diagonal']
         if covariance_type not in allowed_covariance_types:
-            raise ValueError(f'covariance_type must be in {allowed_covariance_types}')
+            raise ValueError(
+                f'covariance_type must be in {allowed_covariance_types}')
         self.covariance_type = covariance_type
 
         self.means = None
@@ -132,7 +134,6 @@ class GMM():
 
         return posterior
 
-
     def _m_step(self, features, assignments):
         """
         Maximization step in Expectation-Maximization. Given the current features and
@@ -168,7 +169,8 @@ class GMM():
             # for n in range(len(features)):
             _sub = features - self.means[i]
             if self.covariance_type == 'spherical':
-                self.covariances[i] = (gamma[i].dot(np.linalg.norm(_sub, axis=1)**2))/(Gamma * features.shape[1])
+                self.covariances[i] = (gamma[i].dot(np.linalg.norm(
+                    _sub, axis=1)**2))/(Gamma * features.shape[1])
             else:
                 self.covariances[i] = gamma[i].dot((_sub**2))/Gamma
         return self.means, self.covariances, self.mixing_weights
@@ -224,7 +226,8 @@ class GMM():
             cov=self.covariances[k_idx])
         log_likelihood = np.zeros((features.shape[0], ))
         for i in range(features.shape[0]):
-            log_likelihood[i] = np.log(self.mixing_weights[k_idx]) + distribution.logpdf(features[i])
+            log_likelihood[i] = np.log(
+                self.mixing_weights[k_idx]) + distribution.logpdf(features[i])
         return log_likelihood
 
     def _overall_log_likelihood(self, features):
@@ -260,6 +263,7 @@ class GMM():
         #   https://www.xarg.org/2016/06/the-log-sum-exp-trick-in-machine-learning/
 
         max_value = denom.max(axis=0, keepdims=True)
-        denom_sum = max_value + np.log(np.sum(np.exp(denom - max_value), axis=0))
+        denom_sum = max_value + \
+            np.log(np.sum(np.exp(denom - max_value), axis=0))
         posteriors = np.exp(num - denom_sum)
         return posteriors

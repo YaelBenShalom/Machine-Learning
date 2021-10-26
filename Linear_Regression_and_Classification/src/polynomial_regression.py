@@ -9,17 +9,18 @@ except:
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
 
+
 class PolynomialRegression():
     def __init__(self, degree):
         """
         Implement polynomial regression from scratch.
-        
+
         This class takes as input "degree", which is the degree of the polynomial 
         used to fit the data. For example, degree = 2 would fit a polynomial of the 
         form:
 
             ax^2 + bx + c
-        
+
         Your code will be tested by comparing it with implementations inside sklearn.
         DO NOT USE THESE IMPLEMENTATIONS DIRECTLY IN YOUR CODE. You may find the 
         following documentation useful:
@@ -30,7 +31,7 @@ class PolynomialRegression():
         Here are helpful slides:
 
         http://interactiveaudiolab.github.io/teaching/eecs349stuff/eecs349_linear_regression.pdf
-    
+
         The internal representation of this class is up to you. Read each function
         documentation carefully to make sure the input and output matches so you can
         pass the test cases. However, do not use the functions numpy.polyfit or numpy.polval. 
@@ -39,7 +40,7 @@ class PolynomialRegression():
 
         Usage:
             import numpy as np
-            
+
             x = np.random.random(100)
             y = np.random.random(100)
             learner = PolynomialRegression(degree = 1)
@@ -62,7 +63,7 @@ class PolynomialRegression():
     def x_degree_matrix(self, x):
         x_matrix = np.ones([x.shape[0], 1])
         for i in range(1, self.degree + 1):
-            x_matrix = np.append(x_matrix, x**i, axis = 1)
+            x_matrix = np.append(x_matrix, x**i, axis=1)
         return x_matrix
 
     def get_polynomial_matrix(self, x):
@@ -84,7 +85,7 @@ class PolynomialRegression():
         x_matrix = self.x_degree_matrix(features)
         lft = np.linalg.inv(np.dot(x_matrix.T, x_matrix))
         rgt = np.dot(x_matrix.T, targets)
-        self.w = np.dot(lft,rgt)
+        self.w = np.dot(lft, rgt)
 
     def predict(self, features):
         """

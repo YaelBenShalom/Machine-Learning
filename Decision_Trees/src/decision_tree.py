@@ -1,8 +1,9 @@
 import numpy
 import math
 
+
 class Node():
-    def __init__(self, value=None, attribute_name="root", attribute_index=None, branches=None, target = None):
+    def __init__(self, value=None, attribute_name="root", attribute_index=None, branches=None, target=None):
         """
         This class implements a tree structure with multiple branches at each node.
         If self.branches is an empty list, this is a leaf node and what is contained in
@@ -28,6 +29,7 @@ class Node():
         # target attribute will represent a leaf that is the final prediction result
         self.target = target
 
+
 class DecisionTree():
     def __init__(self, attribute_names):
         """
@@ -51,11 +53,10 @@ class DecisionTree():
         Args:
             attribute_names (list): list of strings containing the attribute names for
                 each feature (e.g. chocolatey, good_grades, etc.)
-        
+
         """
         self.attribute_names = attribute_names
         self.tree = Node()
-        
 
     def _check_input(self, features):
         if features.shape[1] != len(self.attribute_names):
@@ -63,26 +64,31 @@ class DecisionTree():
                 "Number of features and number of attribute names must match!"
             )
 
-    def fit_recursion(self, node, features, targets):     
+    def fit_recursion(self, node, features, targets):
         max_info_index = find_max_information_gain(features, targets)
 
-        values_for_index = set((features[:,max_info_index])) 
+        values_for_index = set((features[:, max_info_index]))
         if len(values_for_index) == 1:
             # No added value for maximal information gain -> we reached our stop point
             target_label = get_most_common_label(targets)
             n = Node(target_label, "Result", None, [], target_label)
             node.branches = [n]
-            return 
+            return
 
-        positive_attributes, negative_attributes, positive_attributes_targets, negative_attributes_targets = split_tables(features, max_info_index, targets)
-        
-        node_positive = Node(1, self.attribute_names[max_info_index], max_info_index, [], None)
-        node_negative = Node(0, self.attribute_names[max_info_index], max_info_index, [], None)
+        positive_attributes, negative_attributes, positive_attributes_targets, negative_attributes_targets = split_tables(
+            features, max_info_index, targets)
+
+        node_positive = Node(
+            1, self.attribute_names[max_info_index], max_info_index, [], None)
+        node_negative = Node(
+            0, self.attribute_names[max_info_index], max_info_index, [], None)
         node.branches = [node_negative, node_positive]
 
-        # Now in recursion for both 0 and 1 results 
-        self.fit_recursion(node_negative, negative_attributes, negative_attributes_targets)
-        self.fit_recursion(node_positive, positive_attributes, positive_attributes_targets)
+        # Now in recursion for both 0 and 1 results
+        self.fit_recursion(node_negative, negative_attributes,
+                           negative_attributes_targets)
+        self.fit_recursion(node_positive, positive_attributes,
+                           positive_attributes_targets)
 
     def fit(self, features, targets):
         """
@@ -111,7 +117,7 @@ class DecisionTree():
             predictions (np.array): numpy array of size N array which has the predicitons 
             for the input data.
         """
-    
+
         self._check_input(features)
         predictions = numpy.zeros((len(features), 1))
         for i in range(len(features)):
@@ -128,9 +134,8 @@ class DecisionTree():
                     current_node = current_node.branches[1]
             predicted_value = current_node.branches[0].target
             predictions[i] = predicted_value
-        
-        return predictions
 
+        return predictions
 
     def _visualize_helper(self, tree, level):
         """
@@ -161,7 +166,8 @@ def entropy(column):
     n = total - p
     if n == 0 or p == 0:
         return 0
-    tot_entropy = -(p/total)*math.log(p/total, 2) - (n/total)*math.log(n/total, 2)
+    tot_entropy = -(p/total)*math.log(p/total, 2) - \
+        (n/total)*math.log(n/total, 2)
     return tot_entropy
 
 
@@ -170,9 +176,11 @@ def split_tables(features, attribute_index, targets):
     attribute_col = features[:, attribute_index]
     ones_counter = int(attribute_col.sum())
     positive_attributes = numpy.zeros((ones_counter, len(features[0])))
-    negative_attributes = numpy.zeros((features.shape[0] - ones_counter, len(features[0])))
+    negative_attributes = numpy.zeros(
+        (features.shape[0] - ones_counter, len(features[0])))
     positive_attributes_targets = numpy.zeros((ones_counter, 1))
-    negative_attributes_targets = numpy.zeros((features.shape[0] - ones_counter, 1))
+    negative_attributes_targets = numpy.zeros(
+        (features.shape[0] - ones_counter, 1))
 
     counter_positive = 0
     counter_negative = 0
@@ -249,7 +257,8 @@ def information_gain(features, attribute_index, targets):
             attribute_index.
     """
 
-    positive_attributes, negative_attributes, positive_attributes_targets, negative_attributes_targets = split_tables(features, attribute_index, targets)
+    positive_attributes, negative_attributes, positive_attributes_targets, negative_attributes_targets = split_tables(
+        features, attribute_index, targets)
     pp = positive_attributes_targets.sum()
     pn = positive_attributes_targets.shape[0] - pp
     pe = entropy(positive_attributes_targets)
@@ -264,11 +273,12 @@ def information_gain(features, attribute_index, targets):
     total_entropy = entropy(targets)
     return total_entropy - average_entropy
 
+
 def find_max_information_gain(features, targets):
     """ return index of maximal info gain for features"""
     max_info_index = 0
     max_information_gain = 0
-    for i in range(len(features[0])):    
+    for i in range(len(features[0])):
         if information_gain(features, i, targets) > max_information_gain:
             max_info_index = i
             max_information_gain = information_gain(features, i, targets)
@@ -276,12 +286,12 @@ def find_max_information_gain(features, targets):
 
 
 def get_most_common_label(targets):
-    """ get the most frequent target - 0 or 1 """ 
+    """ get the most frequent target - 0 or 1 """
     ones_counter = int(targets.sum())
     if len(targets)/2 > ones_counter:
         return 0
     return 1
-    
+
 
 if __name__ == '__main__':
     # construct a fake tree
@@ -292,7 +302,8 @@ if __name__ == '__main__':
         if not decision_tree.tree:
             decision_tree.tree = Tree(
                 attribute_name=attribute_name,
-                attribute_index=decision_tree.attribute_names.index(attribute_name),
+                attribute_index=decision_tree.attribute_names.index(
+                    attribute_name),
                 value=0,
                 branches=[]
             )
@@ -300,7 +311,8 @@ if __name__ == '__main__':
             decision_tree.tree.branches.append(
                 Tree(
                     attribute_name=attribute_name,
-                    attribute_index=decision_tree.attribute_names.index(attribute_name),
+                    attribute_index=decision_tree.attribute_names.index(
+                        attribute_name),
                     value=0,
                     branches=[]
                 )

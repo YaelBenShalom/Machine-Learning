@@ -3,6 +3,7 @@ from .prior_probability import PriorProbability
 from .metrics import precision_and_recall, confusion_matrix, f1_measure, accuracy
 from .data import load_data, train_test_split
 
+
 def run(data_path, learner_type, fraction):
     """
     This function walks through an entire machine learning workflow as follows:
@@ -48,15 +49,14 @@ def run(data_path, learner_type, fraction):
     else:
         classifier = DecisionTree(attribute_names)
 
-    train_features, test_features, train_targets, test_targets = train_test_split(features, targets, fraction)
+    train_features, test_features, train_targets, test_targets = train_test_split(
+        features, targets, fraction)
 
     # Fitting for future prediction
     classifier.fit(train_features, train_targets)
     # Predicting
     predictions = classifier.predict(test_features)
     # Evaluating results
-    precision, recall = precision_and_recall(test_targets,predictions)
+    precision, recall = precision_and_recall(test_targets, predictions)
 
-    return confusion_matrix(test_targets,predictions), accuracy(test_targets,predictions), precision, recall, f1_measure(test_targets,predictions)
-        
-
+    return confusion_matrix(test_targets, predictions), accuracy(test_targets, predictions), precision, recall, f1_measure(test_targets, predictions)

@@ -1,4 +1,5 @@
-import numpy as np 
+import numpy as np
+
 
 def get_true_shapes(X):
     try:
@@ -7,11 +8,12 @@ def get_true_shapes(X):
         shape = (1, X.shape[0])
     return shape
 
+
 def euclidean_distances(X, Y):
     """Compute pairwise Euclidean distance between the rows of two matrices X (shape MxK) 
     and Y (shape NxK). The output of this function is a matrix of shape MxN containing
     the Euclidean distance between two rows.
-    
+
     Arguments:
         X {np.ndarray} -- First matrix, containing M examples with K features each.
         Y {np.ndarray} -- Second matrix, containing N examples with K features each.
@@ -36,7 +38,7 @@ def manhattan_distances(X, Y):
     """Compute pairwise Manhattan distance between the rows of two matrices X (shape MxK) 
     and Y (shape NxK). The output of this function is a matrix of shape MxN containing
     the Manhattan distance between two rows.
-    
+
     Arguments:
         X {np.ndarray} -- First matrix, containing M examples with K features each.
         Y {np.ndarray} -- Second matrix, containing N examples with K features each.
@@ -47,7 +49,7 @@ def manhattan_distances(X, Y):
     # D = np.zeros((X.shape[0], Y.shape[0]))
     # for i in range(X.shape[0]):
     #     for j in range(Y.shape[0]):
-    #         D[i][j] = np.sum([abs(k-l) for k, l in zip(X[i], Y[j])]) 
+    #         D[i][j] = np.sum([abs(k-l) for k, l in zip(X[i], Y[j])])
     # return D
 
     X_shape = get_true_shapes(X)
@@ -56,8 +58,7 @@ def manhattan_distances(X, Y):
     for i in range(X_shape[0]):
         for j in range(Y_shape[0]):
             if type(X[i]) == np.ndarray:
-                D[i][j] = np.sum([abs(k-l) for k, l in zip(X[i], Y[j])]) 
+                D[i][j] = np.sum([abs(k-l) for k, l in zip(X[i], Y[j])])
             else:
-                D[i][j] = np.sum([abs(k-l) for k, l in zip(X, Y[j])]) 
+                D[i][j] = np.sum([abs(k-l) for k, l in zip(X, Y[j])])
     return D
-
